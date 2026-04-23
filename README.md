@@ -2,7 +2,7 @@
 
 A full-stack shortest path visualizer built to demonstrate DSA competency along with systems design across three languages - C++, Python and Javascript.
 
-![Demo](assets/demo.png)
+![Demo](assets/demo2.png)
 
 ## Architecture
 
