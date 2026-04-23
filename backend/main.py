@@ -26,6 +26,14 @@ class ShortestPathRequest(BaseModel):
 class ShortestPathResponse(BaseModel):
     path: list[str]
     cost: float
+    algorithm: str
+    
+def has_negative_weights(graph: dict) -> bool:
+    for edges in graph.values():
+        for edge in edges:
+            if edge["weight"] < 0:
+                return True
+    return False
     
 # creating the POST endpoint
 @app.post("/shortest-path", response_model=ShortestPathResponse)
@@ -41,11 +49,18 @@ def shortest_path(req: ShortestPathRequest):
         graph_dict[node] = edge_list
         
     try:
-        result = dijkstra_module.find_path(graph_dict, req.source, req.target)
+        if (has_negative_weights(graph_dict)):
+            result = dijkstra_module.find_path_bellman_ford(graph_dict, req.source, req.target)
+            algorithm = "Bellman-Ford"
+        else:
+            result = dijkstra_module.find_path(graph_dict, req.source, req.target)
+            algorithm = "Dijkstra"
+    except RuntimeError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        raise HTTPException(status_code=404, detail=str(e))
+        raise HTTPException(status_code=400, detail=str(e))
     
     if (result.cost == -1.0):
         raise HTTPException(status_code=404, detail="No path found between given nodes.")
     
-    return ShortestPathResponse(path=result.path, cost=result.cost)
+    return ShortestPathResponse(path=result.path, cost=result.cost, algorithm=algorithm)

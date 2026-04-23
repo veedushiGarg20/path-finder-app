@@ -2,6 +2,7 @@
 #include <pybind11/stl.h>          // automatic std::vector / std::unordered_map conversion
 
 #include "dijkstra.h"
+#include "bellman_ford.h"
 
 namespace py = pybind11;
 
@@ -78,5 +79,18 @@ DijkstraResult
     .path  -- list[str], ordered node ids from source to target
     .cost  -- float, total path cost; -1.0 if no path exists
         )doc"
+    );
+
+    m.def("find_path_bellman_ford",
+        [](const py::dict& raw_graph,
+           const string& source,
+           const string& target) -> DijkstraResult
+        {
+            Graph g = dict_to_graph(raw_graph);
+            return bellman_ford(g, source, target);
+        },
+        py::arg("graph"),
+        py::arg("source"),
+        py::arg("target")
     );
 }

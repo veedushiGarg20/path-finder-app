@@ -22,6 +22,7 @@ export default function PathResult({result, error}) {
             <h3 classname={styles.heading}>Shortest Path</h3>
             <p classname={styles.cost}>Cost: {result.cost}</p>
             <p classname={styles.path}>Path: {result.path.join(" ⟶ ")}</p>
+            <p classname={styles.algorithm}>Algorithm used: <strong>{result.algorithm}</strong></p>
         </div>
     )
 }

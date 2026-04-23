@@ -31,3 +31,10 @@
     color: #1d4ed8;
     font-weight: 600;
 }
+
+.algorithm {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #6b7280;
+    font-style: italic;
+}

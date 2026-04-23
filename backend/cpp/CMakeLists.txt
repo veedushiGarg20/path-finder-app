@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # module and any standalone test binary can link against it.
 add_library(dijkstra_core STATIC
     dijkstra.cpp
+    bellman_ford.cpp
 )
 
 target_include_directories(dijkstra_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

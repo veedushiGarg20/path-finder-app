@@ -42,7 +42,7 @@ export default function App() {
 
     return (
         <div className={styles.app}>
-            <h1 className={styles.heading}>Dijkstra Path Finder</h1>
+            <h1 className={styles.heading}>Shortest Path Finder</h1>
             <div className={styles.card}>
                 <GraphCanvas
                 nodes={nodes}
