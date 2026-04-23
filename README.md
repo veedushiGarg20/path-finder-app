@@ -25,7 +25,7 @@ The shortest path algorithm is implemented in C++ and compiled into a shared lib
 - Path and total cost displayed below the canvas
 - Clear canvas to start over
 
-## Steps to Run locally:
+## Steps to Run locally
 
 ### Prerequisites
 - Python 3.11+
@@ -33,7 +33,7 @@ The shortest path algorithm is implemented in C++ and compiled into a shared lib
 - CMake
 - pybind11 (`pip install pybind11`)
 
-### backend
+### Backend
 
 ```bash
 cd backend
@@ -45,7 +45,7 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-### frontend
+### Frontend
 
 ```bash
 cd frontend
