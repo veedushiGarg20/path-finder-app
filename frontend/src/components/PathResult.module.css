@@ -1,0 +1,33 @@
+.container {
+    padding: 16px;
+    font-size: 14px;
+    color: #374151;
+}
+
+.error {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+.placeholder {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.heading {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.cost {
+    margin-bottom: 4px;
+}
+
+.path {
+    font-family: monospace;
+    font-size: 15px;
+    color: #1d4ed8;
+    font-weight: 600;
+}
