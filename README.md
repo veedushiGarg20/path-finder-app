@@ -2,6 +2,8 @@
 
 A full-stack shortest path visualizer built to demonstrate DSA competency along with systems design across three languages - C++, Python and Javascript.
 
+![Demo](assets/demo.png)
+
 ## Architecture
 
 The shortest path algorithm is implemented in C++ and compiled into a shared library using pybind11. FastAPI exposes it as a REST endpoint. React renders an interactive graph interface where users can render weighted graphs and visualize the shortest path.
@@ -53,36 +55,6 @@ npm run dev
 
 Open `http://localhost:5173` in Chrome.
 
-## Project Structure
-
-path-finder-app/
-├── backend/
-│   ├── cpp/
-│   │   ├── dijkstra.h                  # Graph and result type definitions
-│   │   ├── dijkstra.cpp                # Dijkstra's algorithm implementation
-│   │   └── CMakeLists.txt              # Core library build config
-│   ├── bindings/
-│   │   └── bindings.cpp                # pybind11 C++ → Python bridge
-│   ├── CMakeLists.txt                  # Top level build config
-│   ├── main.py                         # FastAPI endpoint
-│   └── requirements.txt
-└── frontend/
-    ├── src/
-    │   ├── components/
-    │   │   ├── GraphCanvas.jsx         # Interactive SVG graph editor
-    │   │   ├── GraphCanvas.module.css  # Canvas styles
-    │   │   ├── Controls.jsx            # Source, target, buttons
-    │   │   ├── Controls.module.css     # Controls styles
-    │   │   ├── PathResult.jsx          # Result display
-    │   │   └── PathResult.module.css   # Result styles
-    │   ├── App.jsx                     # Root component, state management
-    │   ├── App.module.css              # App layout styles
-    │   ├── api.js                      # FastAPI client
-    │   ├── utils.js                    # Graph builder utility
-    │   └── main.jsx                    # React entry point
-    ├── index.html                      # HTML entry point
-    ├── package.json                    # Dependencies and scripts
-    └── vite.config.js                  # Vite configuration
 
 ## Future Improvements
 
