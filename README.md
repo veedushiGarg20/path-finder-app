@@ -58,6 +58,5 @@ Open `http://localhost:5173` in Chrome.
 
 ## Future Improvements
 
-- Bellman-Ford fallback for negative weight edges
-- Step by step algorithm visualizer
+- MongoDB integration to store and load pre-built graph templates
 - Integration with a graph dataset API to lead real world graphs
