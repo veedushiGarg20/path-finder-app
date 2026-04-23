@@ -1,9 +1,10 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import GraphCanvas from "./components/GraphCanvas"
 import Controls from "./components/Controls"
 import PathResult from "./components/PathResult"
+import Templates from "./components/Templates"
 import { buildGraph } from "./utils"
-import { findShortestPath } from "./api"
+import { fetchTemplates, findShortestPath } from "./api"
 import styles from "./App.module.css"
 
 export default function App() {
@@ -14,6 +15,21 @@ export default function App() {
     const [result, setResult] = useState(null)
     const [error, setError] = useState("")
     const [nodeCounter, setNodeCounter] = useState(0)
+    const [templates, setTemplates] = useState([])
+
+    useEffect(() => {
+        fetchTemplates().then(data => setTemplates(data))
+    }, [])
+
+    function handleLoadTemplates(templateNodes, templateEdges) {
+        setNodes(templateNodes)
+        setEdges(templateEdges)
+        setSource("")
+        setTarget("")
+        setResult(null)
+        setError("")
+        setNodeCounter(templateNodes.length)
+    }
 
     async function handleFindPath() {
         // build graph from nodes and edges
@@ -44,14 +60,18 @@ export default function App() {
         <div className={styles.app}>
             <h1 className={styles.heading}>Shortest Path Finder</h1>
             <div className={styles.card}>
+                <Templates
+                    templates={templates}
+                    onLoad={handleLoadTemplates}
+                />
                 <GraphCanvas
-                nodes={nodes}
-                edges={edges}
-                setNodes={setNodes}
-                setEdges={setEdges}
-                result={result}
-                nodeCounter={nodeCounter}
-                setNodeCounter={setNodeCounter}
+                    nodes={nodes}
+                    edges={edges}
+                    setNodes={setNodes}
+                    setEdges={setEdges}
+                    result={result}
+                    nodeCounter={nodeCounter}
+                    setNodeCounter={setNodeCounter}
                 />
                 <Controls
                     nodes={nodes}

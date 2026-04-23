@@ -2,8 +2,34 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import dijkstra_module #type: ignore
+import motor.motor_asyncio
+from dotenv import load_dotenv
+from contextlib import asynccontextmanager
+import os
 
-app = FastAPI()
+load_dotenv()
+
+MONGO_URL = os.getenv("MONGO_URL")
+DB_NAME = os.getenv("DB_NAME")
+
+if not MONGO_URL or not DB_NAME:
+    raise ValueError("Missing required environment variables. Check your .env file.")
+
+# mongodb client setup
+client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URL)
+db = client[DB_NAME]
+
+@asynccontextmanager
+async def lifespan(app : FastAPI):
+    # startup confirm MongoDB connection
+    await db.command("ping")
+    print("Connected to MongoDB.")
+    yield
+    # close client
+    client.close()
+    print("MongoDB connection closed")
+
+app = FastAPI(lifespan=lifespan)
 
 # configuring middleware to allow request from React frontend
 app.add_middleware(
@@ -34,8 +60,20 @@ def has_negative_weights(graph: dict) -> bool:
             if edge["weight"] < 0:
                 return True
     return False
+
+# creating GET /templates endpoint
+@app.get("/templates")
+async def get_templates():
+    try:
+        templates = []
+        async for template in db["templates"].find({}, {"_id": 0}):
+            templates.append(template)
+        return templates
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
     
-# creating the POST endpoint
+# creating the POST /shortest-path endpoint
 @app.post("/shortest-path", response_model=ShortestPathResponse)
 def shortest_path(req: ShortestPathRequest):
     # converting pydantic models into python dicts for the c++ module

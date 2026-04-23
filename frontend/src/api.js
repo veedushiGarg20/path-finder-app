@@ -16,3 +16,11 @@ export async function findShortestPath(graph, source, target) {
 
     return await response.json()
 }
+
+export async function fetchTemplates() {
+    const response = await fetch(`${API_URL}/templates`)
+    if (!response.ok) {
+        throw new Error("Failed to fetch templates");
+    }
+    return await response.json()
+}
